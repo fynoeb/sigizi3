@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Input Data Balita</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="phone-wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <button class="back-btn" onclick="goBack()">&#8249;</button>
+      <div class="header-text">
+        <h1 class="header-title">Input Data Balita</h1>
+        <p class="header-subtitle">Pengukuran Antropometri</p>
+      </div>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper-wrap">
+      <div class="stepper">
+        <div class="step active" id="step-1">
+          <div class="step-circle active">1</div>
+          <span class="step-label active">Identitas</span>
+        </div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step" id="step-2">
+          <div class="step-circle" id="circle-2">2</div>
+          <span class="step-label" id="label-2">Pengukuran</span>
+        </div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step" id="step-3">
+          <div class="step-circle" id="circle-3">3</div>
+          <span class="step-label" id="label-3">Konfirmasi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Area -->
+    <div class="form-scroll">
+
+      <!-- STEP 1: Identitas -->
+      <div class="form-card" id="form-identitas">
+        <div class="section-title">
+          <span class="section-icon">&#128118;</span>
+          <h2>Identitas Balita</h2>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">NAMA LENGKAP BALITA</label>
+          <input class="field-input" type="text" id="nama-balita" placeholder="Masukkan nama lengkap balita" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">NIK BALITA</label>
+          <input class="field-input" type="text" id="nik-balita" placeholder="16 digit NIK" maxlength="16" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">NAMA IBU / ORANG TUA / WALI</label>
+          <input class="field-input" type="text" id="nama-ortu" placeholder="Masukkan nama lengkap ibu / orang tua / wali" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">JENIS KELAMIN</label>
+          <div class="gender-group">
+            <button class="gender-btn selected" id="btn-perempuan" onclick="selectGender('Perempuan')">Perempuan</button>
+            <button class="gender-btn" id="btn-laki" onclick="selectGender('Laki-laki')">Laki-laki</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">TANGGAL LAHIR</label>
+          <input class="field-input" type="text" id="tgl-lahir" placeholder="DD/MM/YYYY" maxlength="10" oninput="formatDate(this)" />
+        </div>
+      </div>
+
+      <!-- STEP 2: Pengukuran -->
+      <div class="form-card hidden" id="form-pengukuran">
+        <div class="section-title">
+          <span class="section-icon">&#128202;</span>
+          <h2>Pengukuran Antropometri</h2>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">BERAT BADAN (kg)</label>
+          <input class="field-input" type="number" id="berat" placeholder="Contoh: 8.5" step="0.1" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">TINGGI / PANJANG BADAN (cm)</label>
+          <input class="field-input" type="number" id="tinggi" placeholder="Contoh: 75.0" step="0.1" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">LINGKAR KEPALA (cm)</label>
+          <input class="field-input" type="number" id="lingkar-kepala" placeholder="Contoh: 44.0" step="0.1" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">TANGGAL PENGUKURAN</label>
+          <input class="field-input" type="text" id="tgl-ukur" placeholder="DD/MM/YYYY" maxlength="10" oninput="formatDate(this)" />
+        </div>
+      </div>
+
+      <!-- STEP 3: Konfirmasi -->
+      <div class="form-card hidden" id="form-konfirmasi">
+        <div class="section-title">
+          <span class="section-icon">&#9989;</span>
+          <h2>Konfirmasi Data</h2>
+        </div>
+
+        <div class="confirm-group">
+          <div class="confirm-row">
+            <span class="confirm-key">Nama Balita</span>
+            <span class="confirm-val" id="conf-nama">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">NIK</span>
+            <span class="confirm-val" id="conf-nik">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Nama Ortu / Wali</span>
+            <span class="confirm-val" id="conf-ortu">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Jenis Kelamin</span>
+            <span class="confirm-val" id="conf-jk">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Tanggal Lahir</span>
+            <span class="confirm-val" id="conf-tgl">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Berat Badan</span>
+            <span class="confirm-val" id="conf-bb">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Tinggi Badan</span>
+            <span class="confirm-val" id="conf-tb">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Lingkar Kepala</span>
+            <span class="confirm-val" id="conf-lk">-</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-key">Tgl. Pengukuran</span>
+            <span class="confirm-val" id="conf-tgl-ukur">-</span>
+          </div>
+        </div>
+
+        <div class="success-msg hidden" id="success-msg">
+          <span>&#127881;</span> Data berhasil disimpan!
+        </div>
+      </div>
+
+    </div><!-- end form-scroll -->
+
+    <!-- Next / Submit Button -->
+    <div class="btn-area">
+      <button class="btn-next" id="btn-next" onclick="nextStep()">Selanjutnya</button>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V21H15v-6H9v6H3V9.5z"/></svg>
+        <span>Beranda</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>
+        <span>Riwayat</span>
+      </div>
+      <div class="nav-fab">
+        <button class="fab-btn">+</button>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span>Notifikasi</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        <span>Profil</span>
+      </div>
+    </nav>
+
+  </div><!-- end phone-wrapper -->
+
+  <script src="script.js"></script>
+</body>
+</html>
